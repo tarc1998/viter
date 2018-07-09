@@ -9,7 +9,7 @@ gamma=1
 
 dir_r=[-1,0,1,0]
 dir_c=[0,1,0,-1]
-v1=np.array([[0]*m]*n)
+v1=np.matrix([[0]*m]*n)
 v2=np.random.rand(n, m)
 
 reward=np.array([[[-1]*4]*m]*n)
@@ -26,25 +26,26 @@ for i in range(0,n):
           prob[k][i][j][i][j] = 1
 
 #the upper left corner keeps
-for dir in range(0,4):
-    reward[0][0][dir] = 0
-    for i in range(0, n):
-        for j in range(0, m):
-            prob[dir][0][0][i][j] = 0
-    prob[dir][0][0][0][0] = 1
-
-print ( v1)
+for a in range(0,4):
+    for i in range(0,n):
+        for j in range(0,m):
+            prob[a][0][0][i][j]=0
+    prob[a][0][0][0][0]=1
+    reward[0][0][a]=0
 
 for u in range(0,iter):
     for i in range(0,n):
         for j in range(0,m):
-            maks = -1000
-            for k1 in range(0,n):
-                for k2 in range(0,m):
-                    for k_dir in range(0, 4):
-                        if reward[i][j][k_dir] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2] > maks :
-                            maks =  reward[k1][k2][k_dir] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2]
-            v2[i][j] = maks
-    v1 = v2
-
-print(v1)
+            maks=-1000000
+            for a in range(0,4):
+                #v=reward[i][j][a]+gamma*sum(prob[a][i][j][r][c]*v1[r][c] for c in range(0,m) for r in range(0,n))
+                suma=0
+                for r in range(0,n):
+                    for c in range(0,m):
+                        suma+=prob[a,i,j,r,c]*v1[r,c]
+                v=reward[i][j][a]+gamma*suma
+                if v>maks:
+                    maks=v
+            v2[i][j]=maks
+    v1=v2
+print (v1)
