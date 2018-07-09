@@ -8,7 +8,7 @@ gamma=1
 
 dir_r=[-1,0,1,0]
 dir_c=[0,1,0,-1]
-
+print ( "nic")
 val1=np.matrix([[0]*m]*n)
 val2=np.random.rand(n, m)
 
