@@ -22,9 +22,9 @@ for i in range(0,n):
   for j in range(0,m):
     for k in range(0,4):
       if 0 <= i+dir_r[k] < n and 0<=j+dir_c[k] <m:
-     	  prob[4][i][j][i+dir_r[k]][j+dir_c[k]] = 1
+     	  prob[k][i][j][i+dir_r[k]][j+dir_c[k]] = 1
       else:
-          prob[4][i][j][i + dir_r[k]][j + dir_c[k]] = 0
+          prob[k][i][j][i][j] = 1
 
 #the upper left corner keeps
 for i in range(0,4):
@@ -32,19 +32,17 @@ for i in range(0,4):
 			
 
 for u in range(0,iter):
-  for i in range(0,n):
-    for j in range(0,m):
-        maks = -1000
-        for k1 in range(0,n):
-            for k2 in range(0,m):
-                for k_dir in range(0, 4):
-                    if reward[k_dir][k1][k2] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2] > maks :
-                        maks =  reward[k_dir][k1][k2] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2]
-    v2[i][j] = maks
-   for i in range (0,n):
-       for j in range(0, m):
-           v1[i][j] = v2[i][j]
+    for i in range(0,n):
+        for j in range(0,m):
+            maks = -1000
+            for k1 in range(0,n):
+                for k2 in range(0,m):
+                    for k_dir in range(0, 4):
+                        if reward[k_dir][i][j] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2] > maks :
+                            maks =  reward[k_dir][k1][k2] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2]
+            v2[i][j] = maks
+    for q in range (0,n):
+        for t in range(0, m):
+            v1[q][t] = v2[q][t]
 
-for i in range( 0, n):
-    for j in range (0, m);
-    print ( v1)
+print (v1)
