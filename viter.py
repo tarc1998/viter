@@ -9,7 +9,7 @@ gamma=1
 
 dir_r=[-1,0,1,0]
 dir_c=[0,1,0,-1]
-v1=np.matrix([[0]*m]*n)
+v1=np.array([[0]*m]*n)
 v2=np.random.rand(n, m)
 
 reward=np.array([[[-1]*4]*m]*n)
@@ -26,12 +26,12 @@ for i in range(0,n):
           prob[k][i][j][i][j] = 1
 
 #the upper left corner keeps
-for a in range(0,4):
-    for i in range(0,n):
-        for j in range(0,m):
-            prob[a][0][0][i][j]=0
-    prob[a][0][0][0][0]=1
-    reward[0][0][a]=0
+for dir in range(0,4):
+    reward[0][0][dir] = 0
+    for i in range(0, n):
+        for j in range(0, m):
+            prob[dir][0][0][i][j] = 0
+    prob[dir][0][0][0][0] = 1
 
 for u in range(0,iter):
     for i in range(0,n):
