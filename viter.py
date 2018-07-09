@@ -3,7 +3,7 @@ import numpy as np
 
 n=5
 m=5
-iter = n+m+10
+iter = 1000
 goal=(0,0)
 gamma=1
 
@@ -12,7 +12,8 @@ dir_c=[0,1,0,-1]
 v1=np.array([[0]*m]*n)
 v2=np.random.rand(n, m)
 
-reward=np.array([[[-1]*4]*m]*n)
+#reward=np.array([[[-1]*4]*m]*n)
+reward=-np.random.rand(n,m,4)
 prob=np.array([[[[[0]*m]*n]*m]*n]*4)
 
 
@@ -49,3 +50,4 @@ for u in range(0,iter):
             v2[i][j]=maks
     v1=v2
 print (v1)
+print(reward)
