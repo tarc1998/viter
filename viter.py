@@ -9,8 +9,7 @@ gamma=1
 
 dir_r=[-1,0,1,0]
 dir_c=[0,1,0,-1]
-print ( "nic")
-v1=np.matrix([[0]*m]*n)
+v1=np.array([[0]*m]*n)
 v2=np.random.rand(n, m)
 
 reward=np.array([[[-1]*4]*m]*n)
@@ -27,9 +26,14 @@ for i in range(0,n):
           prob[k][i][j][i][j] = 1
 
 #the upper left corner keeps
-for i in range(0,4):
-    prob[i][0][0][0][0] = 0
-			
+for dir in range(0,4):
+    reward[0][0][dir] = 0
+    for i in range(0, n):
+        for j in range(0, m):
+            prob[dir][0][0][i][j] = 0
+    prob[dir][0][0][0][0] = 1
+
+print ( v1)
 
 for u in range(0,iter):
     for i in range(0,n):
@@ -38,11 +42,9 @@ for u in range(0,iter):
             for k1 in range(0,n):
                 for k2 in range(0,m):
                     for k_dir in range(0, 4):
-                        if reward[k_dir][i][j] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2] > maks :
-                            maks =  reward[k_dir][k1][k2] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2]
+                        if reward[i][j][k_dir] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2] > maks :
+                            maks =  reward[k1][k2][k_dir] + gamma * prob[k_dir][i][j][k1][k2] * v1[k1][k2]
             v2[i][j] = maks
-    for q in range (0,n):
-        for t in range(0, m):
-            v1[q][t] = v2[q][t]
+    v1 = v2
 
-print (v1)
+print(v1)
